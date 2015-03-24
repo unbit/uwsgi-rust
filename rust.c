@@ -61,7 +61,11 @@ int uwsgi_rust_build_environ(struct wsgi_request *wsgi_req, void *hm) {
 
 static int rust_request(struct wsgi_request *wsgi_req) {
 
+#if UWSGI_PLUGIN_API >= 2
+        if (!wsgi_req->len) {
+#else
         if (!wsgi_req->uh->pktsize) {
+#endif
                 uwsgi_log("Empty request. skip.\n");
                 return -1;
         }
