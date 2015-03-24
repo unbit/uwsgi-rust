@@ -6,6 +6,8 @@ This plugin is an experiemntal effort to support Rust runtime into uWSGI.
 
 Consider it a proof of concept.
 
+To build (and use) the plugin you need a rust environment installed (the rustc binary must be in the system PATH)
+
 Installation
 ------------
 
