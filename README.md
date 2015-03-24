@@ -39,6 +39,35 @@ pub extern fn application(environ: HashMap<&str, &str>) -> (String, Vec<(String,
 }
 ```
 
+running
+
+```sh
+rustc app.rs
+```
+
+will result in libapp.so/libapp.dylib
+
+This new library can be loaded in the uWSGI core with the standard `--dlopen` option. Finally you only need to tell uWSGI which rust function to execute ('application' in this case) at every request:
+
+```ini
+[uwsgi]
+; load the rust plugin (if needed, rememebr you can make monolithic builds)
+plugin = rust
+; bind to http port 8080
+http-socket = :8080
+; load the library app
+dlopen = ./libapp.so
+; set 'application' as the entry point
+rust-fn = application
+
+; enable master
+master = true
+; spawn 10 threads in each process/worker
+threads = 10
+; spawn 8 processes/workers
+processes = 8
+```
+
 Status
 ------
 
