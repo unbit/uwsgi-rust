@@ -2,7 +2,7 @@
 uWSGI and Rust integration plugin
 
 
-This plugin is an experiemntal effort to support Rust runtime into uWSGI.
+This plugin is an experimental effort to support Rust runtime into uWSGI.
 
 Consider it a proof of concept.
 
