@@ -9,6 +9,20 @@ Consider it a proof of concept.
 Installation
 ------------
 
+```sh
+uwsgi --build-plugin https://github.com/unbit/uwsgi-rust
+```
+
+will generate the rust_plugin.so uWSGI plugin
+
+Or you can make a monolithic build using the network installer
+
+```sh
+curl http://uwsgi.it/install | UWSGI_EMBED_PLUGINS="rust=https://github.com/unbit/uwsgi-rust" bash -s nolang /tmp/uwsgi
+```
+
+(this will result in the /tmp/uwsgi binary)
+
 Usage
 -----
 
