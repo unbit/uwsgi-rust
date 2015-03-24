@@ -10,8 +10,10 @@ use std::str;
 use std::slice;
 use std::dynamic_lib::DynamicLibrary;
 
+// global access to the function entry point (could become a vector to support multple apps)
 static mut app : Option<extern fn(HashMap<&str, &str>) -> (String, Vec<(String, String)>, Vec<Vec<u8>>)> = None;
 
+// C functions used by Rust
 extern {
 	fn uwsgi_response_prepare_headers(wsgi_req: *mut c_void, buf: *mut u8, buf_len: u16) -> i32;
 	fn uwsgi_response_add_header(wsgi_req: *mut c_void, key: *mut u8, key_len: u16, val: *mut u8, val_len: u16) -> i32;
@@ -20,6 +22,7 @@ extern {
 	fn uwsgi_rust_build_environ(wsgi_req: *mut c_void, environ: &HashMap<&str, &str>) -> i32;
 }
 
+// load the function entry point
 #[no_mangle]
 pub extern fn rust_load_fn(name: *mut u8, name_len: u16) -> i32 {
 	let lib = match DynamicLibrary::open(None) {
@@ -43,6 +46,7 @@ pub extern fn rust_load_fn(name: *mut u8, name_len: u16) -> i32 {
 	return 0;
 }
 
+// populate the environ HashMap with CGI vars
 #[no_mangle]
 pub extern fn rust_add_environ(environ: *mut HashMap<&str, &str>, key: *mut u8, key_len: u16, val: *mut u8, val_len: u16) -> i32 {
 	let k = unsafe { slice::from_raw_parts(key, key_len as usize) };
@@ -64,6 +68,7 @@ pub extern fn rust_add_environ(environ: *mut HashMap<&str, &str>, key: *mut u8, 
 	return 0;
 }
 
+// run the entry point and send its response to the client
 #[no_mangle]
 pub extern fn rust_request_handler(wsgi_req: *mut c_void) -> i32 {
 
@@ -85,8 +90,6 @@ pub extern fn rust_request_handler(wsgi_req: *mut c_void) -> i32 {
 	};
 
 	let (status, headers, body) = entry_point(environ);
-
-	println!("go");
 
 	unsafe {
 		let ret = uwsgi_response_prepare_headers(wsgi_req, status.as_ptr() as *mut u8, status.into_bytes().len() as u16);

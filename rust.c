@@ -17,6 +17,7 @@ static struct uwsgi_option rust_options[] = {
 	UWSGI_END_OF_OPTIONS
 };
 
+// map the function entry point
 static void rust_apps() {
 	if (!urust.fn) return;
 
@@ -43,6 +44,7 @@ static void rust_apps() {
 	uwsgi_emulate_cow_for_apps(id);
 }
 
+// populate environ HashMap
 int uwsgi_rust_build_environ(struct wsgi_request *wsgi_req, void *hm) {
 	int i;
 	for(i=0;i<wsgi_req->var_cnt;i++) {
@@ -79,8 +81,6 @@ static int rust_request(struct wsgi_request *wsgi_req) {
                 uwsgi_404(wsgi_req);
                 return UWSGI_OK;
         }
-
-	uwsgi_log("app id = %d %p\n", wsgi_req->app_id, wsgi_req);
 
 	return rust_request_handler(wsgi_req);
 }
