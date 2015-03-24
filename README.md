@@ -79,3 +79,11 @@ multithreading works (included spawning threads from rust)
 
 Notes
 -----
+
+```rust
+pub extern fn application(environ: HashMap<&str, &str>) -> (String, Vec<(String, String)>, Vec<Vec<u8>>);
+```
+
+is not the final prototype for the entry point (and absolutely not the best one, expecially the Vec<Vec<u8>> return value could be very inefficient). Feel free to propose more approaches (we can eventually support multiple of them).
+
+Currently we are still investigating the best approach for accessing the request body (maybe a Reader object could be a good approach).
