@@ -17,7 +17,7 @@ uwsgi --build-plugin https://github.com/unbit/uwsgi-rust
 
 will generate the rust_plugin.so uWSGI plugin
 
-Or you can make a monolithic build using the network installer
+Or you can make a monolithic build using the network installer (currently probably broken on Linux, works on OSX)
 
 ```sh
 curl http://uwsgi.it/install | UWSGI_EMBED_PLUGINS="rust=https://github.com/unbit/uwsgi-rust" bash -s nolang /tmp/uwsgi
@@ -67,7 +67,7 @@ This new library can be loaded in the uWSGI core with the standard `--dlopen` op
 
 ```ini
 [uwsgi]
-; load the rust plugin (if needed, rememebr you can make monolithic builds)
+; load the rust plugin (if needed, rememebr you can eventually make monolithic builds)
 plugin = rust
 ; bind to http port 8080
 http-socket = :8080
