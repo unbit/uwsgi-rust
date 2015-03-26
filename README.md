@@ -89,7 +89,7 @@ Status
 
 prefork and layzy-apps modes are both supported
 
-preforking works
+multiprocessing works
 
 multithreading works (included spawning threads from rust)
 
