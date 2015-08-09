@@ -1,0 +1,19 @@
+[package]
+
+name = "rust_uwsgi_app"
+version = "0.0.1-dev"
+authors = ["Unbit s.a.s"]
+license = "MIT"
+repository = "https://github.com/unbit/uwsgi-rust"
+description = """
+An example app to be deployed on uwsgi-rust. 
+"""
+
+[lib]
+crate-type = ["dylib"]
+name = "rust_uwsgi_app"
+path = "app.rs"
+
+[dependencies]
+libc = "0.1"
+dylib = "0.0.1"
