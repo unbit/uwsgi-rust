@@ -1,14 +1,13 @@
-#![feature(libc)]
 #![allow(unused_mut)]
-#![feature(std_misc)]
 
+extern crate dylib;
 extern crate libc;
 
+use dylib::DynamicLibrary;
 use libc::c_void;
 use std::collections::HashMap;
 use std::str;
 use std::slice;
-use std::dynamic_lib::DynamicLibrary;
 
 // global access to the function entry point (could become a vector to support multple apps)
 static mut app : Option<extern fn(HashMap<&str, &str>) -> (String, Vec<(String, String)>, Vec<Vec<u8>>)> = None;

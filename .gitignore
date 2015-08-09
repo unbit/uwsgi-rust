@@ -1,0 +1,4 @@
+.uwsgi_plugins_builder/
+target/
+Cargo.lock
+*.so
