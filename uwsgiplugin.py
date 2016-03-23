@@ -1,9 +1,7 @@
 import os
 import os.path
-import inspect
 
-base_path = os.path.dirname(inspect.getframeinfo(inspect.currentframe())[0])
-
+base_path = os.path.dirname(__file__)
 NAME = 'rust'
 GCC_LIST = ['rust', '%s/target/release/libuwsgi_rust.a' % base_path]
 
