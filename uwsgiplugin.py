@@ -1,7 +1,7 @@
 import os
 import os.path
 
-base_path = os.path.dirname(__file__)
+base_path = os.path.dirname(path.realpath("__file__"))
 NAME = 'rust'
 GCC_LIST = ['rust', '%s/target/release/libuwsgi_rust.a' % base_path]
 
